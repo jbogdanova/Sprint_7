@@ -21,7 +21,6 @@ public class OrderSteps extends CommonSteps {
     @Step("Принять заказ с id {orderId} курьером с id {courierId}")
     public static ValidatableResponse acceptOrder(int orderId, int courierId, int statusCode) {
         ValidatableResponse response = given()
-                //.pathParams("id", orderId)
                 .queryParam("courierId", courierId)
                 .when()
                 .put("/orders/accept/{orderId}", orderId)
@@ -29,10 +28,9 @@ public class OrderSteps extends CommonSteps {
         return checkStatusCode(response, statusCode);
     }
 
-    @Step("Получить список заказов курьера с id {courierId}")
-    public static ValidatableResponse getOrderList(int courierId, int statusCode) {
+    @Step("Получить список заказов")
+    public static ValidatableResponse getOrderList(int statusCode) {
         ValidatableResponse response = given()
-                .queryParam("courierId", courierId)
                 .when()
                 .get("/orders")
                 .then();

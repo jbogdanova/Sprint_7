@@ -5,6 +5,7 @@ import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.RestAssured;
 import io.restassured.response.ValidatableResponse;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -50,5 +51,12 @@ public class CreateCourierTests {
         courier.setPassword(null);
         ValidatableResponse response = CourierSteps.createCourier(courier, 400);
         CourierSteps.checkFieldEqualTo(response, ResponseFields.MESSAGE, ErrorMessages.NOT_FILLED_REQUIRED_FIELDS_ACCOUNT);
+    }
+
+    @After
+    public void tearDown() {
+        ValidatableResponse response = CourierSteps.login(courier.getLogin(), courier.getPassword(), 200);
+        int courierId = response.extract().jsonPath().getInt(ResponseFields.ID);
+        CourierSteps.deleteCourier(courierId, 200);
     }
 }

@@ -29,4 +29,13 @@ public class CourierSteps extends CommonSteps {
                 .then();
         return checkStatusCode(response, statusCode);
     }
+
+    @Step("Удалить курьера с id {courierId}")
+    public static ValidatableResponse deleteCourier(int courierId, int statusCode) {
+        ValidatableResponse response = given()
+                .when()
+                .delete("/courier/{courierId}", courierId)
+                .then();
+        return checkStatusCode(response, statusCode);
+    }
 }
