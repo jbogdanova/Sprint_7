@@ -51,6 +51,9 @@ public class CreateCourierTests {
         courier.setPassword(null);
         ValidatableResponse response = CourierSteps.createCourier(courier, 400);
         CourierSteps.checkFieldEqualTo(response, ResponseFields.MESSAGE, ErrorMessages.NOT_FILLED_REQUIRED_FIELDS_ACCOUNT);
+        courier.setPassword(TestData.PASSWORD);
+        response = CourierSteps.createCourier(courier, 201);
+        CourierSteps.checkFieldEqualTo(response, ResponseFields.OK, true);
     }
 
     @After
